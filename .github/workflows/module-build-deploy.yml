@@ -57,6 +57,7 @@ jobs:
               }
             ]
       - name: Build with Maven
+        run: ./mvnw -B deploy
         env:
            ARTIFACTORY_HOSTNAME: ${{ secrets.ARTIFACTORY_HOSTNAME }}
            ARTIFACTORY_SNAPSHOT_REPO: ${{ secrets.ARTIFACTORY_SNAPSHOT_REPO }}
@@ -64,4 +65,3 @@ jobs:
            ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
            ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
            # BUILD_ENV: 'github-actions'
-        run: ./mvnw -B deploy
