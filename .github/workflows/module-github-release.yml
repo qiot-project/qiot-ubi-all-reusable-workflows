@@ -67,8 +67,12 @@ jobs:
         env:
           SCM_USERNAME_REF: 'github-actions'
           SCM_TOKEN_REF: ${{ secrets.ORG_GITHUB_TOKEN }}
+          ARTIFACTORY_HOSTNAME: ${{ secrets.ARTIFACTORY_HOSTNAME }}
+          ARTIFACTORY_SNAPSHOT_REPO: ${{ secrets.ARTIFACTORY_SNAPSHOT_REPO }}
+          ARTIFACTORY_RELEASE_REPO: ${{ secrets.ARTIFACTORY_RELEASE_REPO }}
           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
+          ARTIFACTORY_TOKEN:  ${{ secrets.ARTIFACTORY_TOKEN }}
           # BUILD_ENV: 'github-actions'
         run: |
           ./mvnw --batch-mode release:prepare
