@@ -9,6 +9,7 @@ on:
     inputs:
       ACTOR:
         required: true
+        type: string
     secrets:
       ARTIFACTORY_HOSTNAME:
         required: true
