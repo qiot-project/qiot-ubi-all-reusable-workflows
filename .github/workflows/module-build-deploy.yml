@@ -6,6 +6,11 @@ on:
     # use the inputs and secrets keywords 
     # to define inputs or secrets that will be 
     # passed from a caller workflow.
+    inputs:
+      BRANCH:
+        required: false
+        type: string
+        default: develop
     secrets:
       ARTIFACTORY_HOSTNAME:
         required: true
@@ -30,7 +35,7 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: ${{ inputs.BRANCH }}
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
