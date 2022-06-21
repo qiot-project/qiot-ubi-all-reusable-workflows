@@ -60,11 +60,11 @@ jobs:
         run: |
           echo "::set-output name=image_tag::$(git rev-parse --short=7 HEAD)"
         shell: bash
-#      - name: Build with Maven
-#        env:
-#           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
-#           ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
-#        run: ./mvnw package -B -Pprod,native
+      - name: Build with Maven
+        env:
+           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
+           ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
+        run: ./mvnw package -B -Pprod,native
       - name: Push Image
         run: |
           ./mvnw -B -Pdevelop,native oc:build oc:push                           \
