@@ -65,8 +65,8 @@ jobs:
 #           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
 #           ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
 #        run: ./mvnw package -B -Pprod,native
-#      - name: Push Image
-#        run: |
-#          ./mvnw -B -Pdevelop,native oc:build oc:push                           \
-#          -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }}      \
-#          -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }}
+      - name: Push Image
+        run: |
+          ./mvnw -B -Pdevelop,native oc:build oc:push                           \
+          -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }}      \
+          -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }}
