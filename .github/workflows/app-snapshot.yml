@@ -54,12 +54,6 @@ jobs:
                 "password": "${env.ARTIFACTORY_TOKEN_REF}"
               }
             ]
-
-      - name: Get Image tag ID
-        id: get-image-tag
-        run: |
-          echo "::set-output name=image_tag::$(git rev-parse --short=7 HEAD)"
-        shell: bash
 #      - name: Build with Maven
 #        env:
 #           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
@@ -71,9 +65,4 @@ jobs:
 #          -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }}      \
 #           -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }}
       - name: Build and push
-        run: |
-           ./mvnw -B clean package -Pprod,native oc:build oc:push \
-          -Dquarkus.native.container-build=true \
-          -Dquarkus.container-image.build=true \
-          -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }} \
-          -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }} 
+        run: ./mvnw -B clean package -Pprod,native oc:build oc:push -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }} -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }} 
