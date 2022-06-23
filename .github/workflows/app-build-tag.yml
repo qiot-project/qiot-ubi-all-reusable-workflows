@@ -6,6 +6,13 @@ on:
     # use the inputs and secrets keywords 
     # to define inputs or secrets that will be 
     # passed from a caller workflow.
+    inputs:
+      TAG_NAME:
+        required: true
+        type: string
+      IMAGE_VERSION:
+        required: false
+        type: string
     secrets:
       ARTIFACTORY_USERNAME:
         required: true
@@ -23,6 +30,8 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@v3
+        with:
+          tag: ${{ inputs.TAG_NAME }}
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -50,13 +59,16 @@ jobs:
                 "password": "${env.ARTIFACTORY_TOKEN_REF}"
               }
             ]
-      - name: Build with Maven
-        env:
-           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
-           ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
-        run: mvn -B -Pprod,native deploy
-      - name: Push Image
-        run: |
-          mvn -B -Prelease,native oc:build oc:push                          \
-          -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }}      \
-          -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }}
+#      - name: Build with Maven
+#        env:
+#           ARTIFACTORY_USERNAME_REF: ${{ secrets.ARTIFACTORY_USERNAME }}
+#           ARTIFACTORY_TOKEN_REF: ${{ secrets.ARTIFACTORY_TOKEN }}
+#        run: mvn -B -Pprod,native deploy
+#      - name: Push Image
+#        run: |
+#          mvn -B -Prelease,native oc:build oc:push                          \
+#          -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }}      \
+#          -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }}
+      - name: Build and push
+        run: ./mvnw -B clean package -Pprod,native oc:build oc:push -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Djkube.docker.push.username=${{ secrets.QUAY_USERNAME }} -Djkube.docker.push.password=${{ secrets.QUAY_PASSWORD }} 
+
