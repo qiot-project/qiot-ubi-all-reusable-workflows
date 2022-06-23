@@ -1,4 +1,4 @@
-name: Reusable Maven Release  (from new tag)
+name: Reusable Github release (from main)
 
 on:
   workflow_call:
