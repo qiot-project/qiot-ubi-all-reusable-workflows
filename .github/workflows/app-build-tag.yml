@@ -1,4 +1,4 @@
-name: Reusable Build TAG (from main branch)
+name: Reusable Build TAG (from new tags)
 
 on:
   workflow_call:
