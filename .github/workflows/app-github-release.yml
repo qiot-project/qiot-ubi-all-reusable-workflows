@@ -15,7 +15,7 @@ on:
         required: true
       ARTIFACTORY_TOKEN:
         required: true
-      GITHUB_TOKEN:
+      ORG_GITHUB_TOKEN:
         required: true
 
 jobs:
